@@ -1,0 +1,23 @@
+{
+  "name": "youtube-split",
+  "version": "1.0.0",
+  "description": "Fetches youtube soundtrack videos and splits them into downloadable tracks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ffmpeg.js": "^3.1.9001",
+    "ytdl": "^0.10.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-react": "^7.9.1",
+    "jest": "^23.1.0"
+  }
+}
