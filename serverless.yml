@@ -16,29 +16,41 @@ service: youtubeSplit
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
-
 provider:
   name: aws
   runtime: nodejs6.10
+
+plugins:
+  - serverless-webpack
+  - serverless-s3-local
+  - serverless-offline
+
+custom:
+  s3:
+    host: 0.0.0.0
+    port: 8099
+    directory: /tmp
+  webpack:
+    webpackConfig: webpack.dev.js
 
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
 
- iamRoleStatements:
-   - Effect: "Allow"
-     Action:
-       - "s3:ListBucket"
-     Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-   - Effect: "Allow"
-     Action:
-       - "s3:PutObject"
-     Resource:
-       Fn::Join:
-         - ""
-         - - "arn:aws:s3:::"
-           - "Ref" : "ServerlessDeploymentBucket"
-           - "/*"
+iamRoleStatements:
+  - Effect: "Allow"
+    Action:
+      - "s3:ListBucket"
+    Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+  - Effect: "Allow"
+    Action:
+      - "s3:PutObject"
+    Resource:
+      Fn::Join:
+        - ""
+        - - "arn:aws:s3:::"
+          - "Ref" : "ServerlessDeploymentBucket"
+          - "/*"
 
 # you can define service wide environment variables here
 #  environment:
@@ -53,9 +65,9 @@ provider:
 #    - exclude-me.js
 #    - exclude-me-dir/**
 
-functions:
-  hello:
-    handler: index.handler
+# functions:
+#   hello:
+#     handler: index.handler
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -101,3 +113,9 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources:
+  Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: local-bucket

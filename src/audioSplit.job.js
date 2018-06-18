@@ -1,10 +1,11 @@
 import ytdl from 'ytdl-core';
 import ffmpeg from 'ffmpeg.js/ffmpeg-mp4.js';
+import { S3 } from 'aws-sdk/clients/s3';
 
 const exec = async url => {
 	const audioData = await fetchYoutubeAudio(url);
 	const tracks = await splitAudioByTracks(audioData);
-	const stored = await saveTracksToStorage(tracks);
+	await saveTracksToStorage(tracks);
 };
 
 const fetchYoutubeAudio = url => {
@@ -29,6 +30,10 @@ const splitAudioByTracks = (data, tracksInfo) => {
 
 		return audio.MEMFS[0];
 	});
+};
+
+const saveTracksToStorage = tracks => {
+	const s3 = new S3();
 };
 
 module.exports = { 

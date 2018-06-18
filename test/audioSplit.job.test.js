@@ -1,8 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { fetchYoutubeAudio, splitAudioByTracks } from '../src/audioSplit.job';
-import ffmpeg from 'ffmpeg.js/ffmpeg-mp4.js';
-
 
 test('fetchYoutubeAudio', async () => {
 	const audioData = await fetchYoutubeAudio('https://www.youtube.com/watch?v=zOWJqNPeifU');
