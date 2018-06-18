@@ -1,4 +1,3 @@
-import fs from 'fs';
 import ytdl from 'ytdl-core';
 
 const validateYoutubeURL = url => ytdl.validateURL(url);
