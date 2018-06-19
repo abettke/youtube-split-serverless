@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { fetchYoutubeAudio, splitAudioByTracks } from '../src/audioSplit.job';
+import { 
+	fetchYoutubeAudio, 
+	splitAudioByTracks, 
+	packageTracks } from '../src/audioSplit.job';
 
 test('fetchYoutubeAudio', async () => {
 	const audioData = await fetchYoutubeAudio('https://www.youtube.com/watch?v=zOWJqNPeifU');
@@ -27,7 +30,7 @@ test('splitAudioToTracks', () => {
 		}
 	];
 	const tracks = splitAudioByTracks(audioData, trackInfo);
-	tracks.map(track => {
-		fs.writeFileSync(track.name, Buffer(track.data));
-	});
+	expect(tracks).toHaveLength(3);
+
+	const tracksArchive = packageTracks(tracks);
 });
